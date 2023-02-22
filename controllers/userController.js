@@ -18,14 +18,14 @@ module.exports = {
                 // console.log(email)
                 return res.status(422).send({ code: 422, status: "failed", msg: "email already exist" })
             }
-            
+
             password = await bcrypt
                 .hash(password, saltRounds)
             if (!userExist) {
                 let data = {
                     email: email,
                     name: name,
-                    password:password
+                    password: password
                 }
                 await userQueries.saveUser(data)
             }
@@ -39,12 +39,15 @@ module.exports = {
         console.log(secretKey)
         let email = req.body.email
         let password = req.body.password
+        password = await bcrypt.compare(password, hash)
+        console.log(password)
+
         try {
             let userExist = await userQueries.getUserEmail(email);
             if (userExist && userExist != null) {
                 var token = jwt.sign({
                     email: userExist.email,
-                    
+
                 }, secretKey)
                 return res.status(200).send({ status: 'success', token: token })
             } else {
