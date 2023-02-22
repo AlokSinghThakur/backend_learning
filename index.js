@@ -2,12 +2,20 @@ const express = require("express");
 require('./models')
 require('dotenv').config()
 const app = express();
-const models = require('./models')
+app.use(express.json())
+
 const port = 3000
+
+
+const models = require('./models')
 const USER_ROUTES = require('./routes')
 
+
+
+
+
 app.use('/user' , USER_ROUTES)
-app.use(express.json())
+
 
 models.db_config
 .sync({
@@ -19,6 +27,8 @@ models.db_config
 .catch(err => {
     console.log('Database not connected', err)
 })
+
+
 
 app.listen(port, () => {
     console.log(`App is listening at localhost:${port}`)

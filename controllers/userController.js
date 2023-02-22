@@ -7,20 +7,25 @@ const userQueries = require("../models/queries/user")
 
 module.exports = {
     async signup(req, res) {
-        const email = req.body.email
-        const name = req.body.name
+        let email = req.body.email
+        let name = req.body.name
+        let password = req.body.password
+        saltRounds = 10
         try {
             let userExist = await userQueries.getUserEmail(email);
-            console.log(email)
+
             if (userExist && userExist != null) {
-                console.log(email)
+                // console.log(email)
                 return res.status(422).send({ code: 422, status: "failed", msg: "email already exist" })
             }
-            console.log('first')
+            
+            password = await bcrypt
+                .hash(password, saltRounds)
             if (!userExist) {
                 let data = {
                     email: email,
-                    name: name
+                    name: name,
+                    password:password
                 }
                 await userQueries.saveUser(data)
             }
@@ -32,16 +37,16 @@ module.exports = {
     },
     async login(req, res) {
         console.log(secretKey)
-        const email = req.body.email
-        const name = req.body.name
+        let email = req.body.email
+        let password = req.body.password
         try {
             let userExist = await userQueries.getUserEmail(email);
             if (userExist && userExist != null) {
                 var token = jwt.sign({
                     email: userExist.email,
+                    
                 }, secretKey)
                 return res.status(200).send({ status: 'success', token: token })
-
             } else {
                 console.log("email is invalid")
             }
