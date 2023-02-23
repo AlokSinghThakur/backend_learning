@@ -7,7 +7,7 @@ ROUTES.post('/signup',userController.signup)
 ROUTES.post('/login',userController.login)
 ROUTES.post('/followUser',followUserController.followUser)
 ROUTES.post('/unfollow',followUserController.unFollowUser)
-ROUTES.get('/followerList',followUserController.followerList)
+ROUTES.get('/followersList',followUserController.followerList)
 ROUTES.get('/followingList',followUserController.followingList)
 
 
