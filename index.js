@@ -22,7 +22,7 @@ models.db_config
     // force:true
 })
 .then(() => {
-    console.log("Connected to Databse!");
+    console.log("Connected to Database!");
 })
 .catch(err => {
     console.log('Database not connected', err)

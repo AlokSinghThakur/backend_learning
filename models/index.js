@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const userModel = require("./user/index")
+const userFollowModel = require('./usersFollow/index');
 
 exports.db_config = new Sequelize('localhost','root','54321',{
     host:'localhost',
@@ -8,4 +9,5 @@ exports.db_config = new Sequelize('localhost','root','54321',{
     pool:{max:5,min:0,idle:10000}
 });
 
-exports.userModel = userModel(exports.db_config)
+exports.userModel = userModel(exports.db_config);
+exports.userFollowModel = userFollowModel(exports.db_config)
