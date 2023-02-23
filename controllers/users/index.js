@@ -31,8 +31,9 @@ module.exports = {
             res.status(200).json({ code: 200, status: "success", msg: "user created Successfully" })
 
         } catch (err) {
-            console.log('error : ', err)
-        }
+            console.log("error : ", err);
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+         }
     },
     async login(req, res) {
         console.log(secretKey)
@@ -59,8 +60,9 @@ module.exports = {
                 return res.status(422).send({ status: "Wrong password" })
             }
         } catch (err) {
-            console.log("error : ", err)
-        }
+            console.log("error : ", err);
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+           }
 
     }
 }
