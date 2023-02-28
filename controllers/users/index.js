@@ -33,7 +33,7 @@ module.exports = {
         } catch (err) {
             console.log("error : ", err);
             return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
-         }
+        }
     },
     async login(req, res) {
         console.log(secretKey)
@@ -62,7 +62,90 @@ module.exports = {
         } catch (err) {
             console.log("error : ", err);
             return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
-           }
+        }
 
+    },
+    async editEmail(req, res) {
+        let userId = req.body.id;
+        let data = req.body;
+
+        if (!data) return res.status(422).send({ code: 422, status: 'failed', msg: 'Data is required' })
+        try {
+            if (data.email) {
+                let mailUsed = await userQueries.getUserEmail(data.email)
+                if (mailUsed && mailUsed.id != userId)
+                    return res.status(422).send({ code: 422, status: 'failed', msg: 'Email already exist' })
+            }
+            await userQueries.editProfile(userId, data)
+            let userDetails = await userQueries.getUserById(userId)
+            return res.status(200).send({ code: 200, status: 'success', msg: 'details changed successfully.', data: userDetails });
+        } catch (err) {
+            console.log(err);
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+        }
+    },
+    async editmobileNo(req, res) {
+        let userId = req.body.id;
+        let data = req.body;
+
+        if (!data) return res.status(422).send({ code: 422, status: 'failed', msg: 'Data is required' })
+        console.log(data.mobileno)
+        try {
+            if (data.mobileno) {
+                let numberUsed = await userQueries.getUserNumber(data.mobileno)
+                console.log(numberUsed)
+                if (numberUsed && numberUsed.id != userId)
+                    return res.status(422).send({ code: 422, status: 'failed', msg: 'number already exist' })
+            }
+            await userQueries.editProfile(userId, data)
+            let userDetails = await userQueries.getUserById(userId)
+            return res.status(200).send({ code: 200, status: 'success', msg: 'details changed successfully.', data: userDetails });
+        } catch (err) {
+            console.log(err);
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+        }
+    },
+    async getMyPRofile(req, res) {
+        let userId = req.body.user_id
+        try {
+            let userDetails = await userQueries.getUserById(userId)
+            return res.status(200).send({ code: 200, status: 'success', data: userDetails });
+        } catch (err) {
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+        }
+    },
+    async editMyProfile(req, res) {
+        let userId = req.body.user_id
+        let data = req.body;
+
+
+        if (!data) return res.status(422).send({ code: 422, status: 'failed', msg: 'Data is required' })
+
+        try {
+            if (data.user_id) {
+                let userData = await userQueries.getUserById(data.user_id)
+                // if (userData && userData.id != userId)
+                //     return res.status(422).send({ code: 422, status: 'failed', msg: 'Email already exist' })
+console.log(userData.age)
+                if (userData.age == data.age)
+                    return res.status(422).send({ code: 422, status: 'failed', msg: 'age already exist' })
+
+                if (userData.gender == data.gender)
+                    return res.status(422).send({ code: 422, status: 'failed', msg: 'gender already exist' })
+
+                if (userData.name == data.name)
+                    return res.status(422).send({ code: 422, status: 'failed', msg: 'name already exist' })
+
+
+            }
+            await userQueries.editProfile(userId, data)
+            let userDetails = await userQueries.getUserById(userId)
+            return res.status(200).send({ code: 200, status: 'success', msg: 'details changed successfully.', data: userDetails });
+
+
+
+        } catch (err) {
+            return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
+        }
     }
 }

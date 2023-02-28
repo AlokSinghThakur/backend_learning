@@ -10,7 +10,11 @@ module.exports = (db_config) => {
         },
         name: { type: DataTypes.STRING },
         email: { type: DataTypes.STRING },
-        password: {type: DataTypes.STRING}
+        password: {type: DataTypes.STRING},
+        gender:{type:DataTypes.STRING},
+        age:{type:DataTypes.STRING},
+        mobileno:{type: DataTypes.INTEGER},
+        avatar:{type: DataTypes.STRING}
     });
     return user;
 }

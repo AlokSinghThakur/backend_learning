@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const userModel = require("./user/index")
 const userFollowModel = require('./usersFollow/index');
-const citiesDataModel = require("./cities")
+const citiesDataModel = require("./cities");
 
 exports.db_config = new Sequelize('localhost','root','54321',{
     host:'localhost',
