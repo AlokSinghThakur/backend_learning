@@ -14,7 +14,8 @@ module.exports = (db_config) => {
         gender:{type:DataTypes.STRING},
         age:{type:DataTypes.STRING},
         mobileno:{type: DataTypes.INTEGER},
-        avatar:{type: DataTypes.STRING}
+        avatar:{type: DataTypes.STRING},
+        affiliatedId:{type:DataTypes.STRING}
     });
     return user;
 }

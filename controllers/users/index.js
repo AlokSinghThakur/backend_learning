@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 
 const secretKey = process.env.JWT_SECRET;
 
@@ -124,9 +125,9 @@ module.exports = {
         try {
             if (data.user_id) {
                 let userData = await userQueries.getUserById(data.user_id)
-                // if (userData && userData.id != userId)
-                //     return res.status(422).send({ code: 422, status: 'failed', msg: 'Email already exist' })
-console.log(userData.age)
+//                 if (userData && userData.id != userId)
+//                     return res.status(422).send({ code: 422, status: 'failed', msg: 'Email already exist' })
+// console.log(userData.age)
                 if (userData.age == data.age)
                     return res.status(422).send({ code: 422, status: 'failed', msg: 'age already exist' })
 
@@ -135,8 +136,6 @@ console.log(userData.age)
 
                 if (userData.name == data.name)
                     return res.status(422).send({ code: 422, status: 'failed', msg: 'name already exist' })
-
-
             }
             await userQueries.editProfile(userId, data)
             let userDetails = await userQueries.getUserById(userId)
@@ -147,5 +146,6 @@ console.log(userData.age)
         } catch (err) {
             return res.status(422).send({ code: 422, status: 'failed', msg: err.message });
         }
-    }
+    },
+    
 }
