@@ -4,8 +4,11 @@ require('dotenv').config()
 const app = express();
 app.use(express.json())
 
-const port = 3000
+var jsrender = require('jsrender');
+const port = 3050
 
+app.engine('html', jsrender.__express);
+app.set('view engine', 'html');
 
 const models = require('./models')
 const USER_ROUTES = require('./routes')
