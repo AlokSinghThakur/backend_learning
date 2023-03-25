@@ -1,20 +1,14 @@
 const sgMail = require('@sendgrid/mail')
 const fs = require('fs')
+sgMail.setApiKey('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')
 var jsrender = require('jsrender');
-// var htmlfile = require('../email/followUser.html')
-// console.log(htmlfile)
-
 var html = jsrender.renderFile('./controllers/email/mail.html',{ name: "shivam" })
 
-// var tmpl = jsrender.templates('Name - {{:name}}<br/>'); // Compile template from string
-
-// var html = tmpl.render({name: "Jim"}); // Render
-// result: "Name - Jim<br/>"
 module.exports = {
     async email(req, res) {
         let name = req.body.name
 
-        console.log(html)
+        // console.log(html)
         try {
 
             const msg = {
@@ -28,10 +22,15 @@ module.exports = {
                 .send(msg)
                 .then(() => {
                     console.log('Email sent')
+                    return res.send({msg:'success'})
                 })
                 .catch((error) => {
                     console.error(error)
+                    return res.send({msg:error})
                 })
+                // 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
+                // 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
+               
 
         } catch (err) {
             console.log("error : ", err);
